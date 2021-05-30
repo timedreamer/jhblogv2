@@ -1,0 +1,10 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+.DS_Store # if a windows user, Thumbs.db instead
+Thumbs.db
+
+/resources/
+/public/
