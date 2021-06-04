@@ -1,0 +1,461 @@
+---
+title: 'Tidymodels Part I: Building models'
+author: Ji Huang
+date: '2021-06-04'
+output: 
+    html_document:
+        toc: true
+        code_folding: show
+slug: []
+categories:
+  - dry lab
+tags:
+  - statistics
+  - R
+meta_img: images/image.png
+description: Description for the page
+
+---
+
+```{r setup, include=FALSE, class.source = 'fold-hide'}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Inspired by the Julia Silge's [blog](https://www.tidyverse.org/blog/2021/05/choose-tidymodels-adventure/). I want to try the tidymodels system by add blocks to the backbone. To keep it simple, I used `ranger` engine for a simple randome forest model on the [cells data](https://www.rdocumentation.org/packages/modeldata/versions/0.1.0/topics/cells) (comes with tidymodels). 
+
+## 0. Prep
+
+```{r, message=FALSE, warning=FALSE}
+library(tidymodels)
+
+tidymodels_prefer()
+
+## define a function for lollipop plot. also called Cleveland dot plots.
+## https://www.r-graph-gallery.com/303-lollipop-plot-with-2-values.html
+plot_lollipop <- function(tain_metrics, test_metrics) {
+    
+    bind_rows(tain_metrics, test_metrics) %>% 
+        select(-.estimator) %>% 
+        pivot_wider(names_from = type, values_from = .estimate) %>% 
+        ggplot()+
+        geom_segment(aes(x= .metric, xend= .metric, 
+                         y=test_set, yend=train_set), color="grey") +
+        geom_point(aes(x= .metric, y = test_set, color="red"), size=3)+
+        ggrepel::geom_text_repel(aes(x= .metric, y = test_set, 
+                                     label = round(test_set,2)))+
+        geom_point(aes(x= .metric, y = train_set, color = "blue"), size=3 ) +
+        ggrepel::geom_text_repel(aes(x= .metric, y = train_set,
+                                     label = round(train_set,2)))+
+        scale_color_manual(values=c("blue", "red"), label = c("training", "testing"))+
+        #coord_flip()+
+        labs(x = "", y ="", color = "Dataset")+
+        cowplot::theme_cowplot()
+
+}
+```
+
+Load dataset.
+
+```{r }
+data("cells")
+cells <- cells %>% select(-case) # `case` is author defined training, testing set.
+```
+
+Setting the `seed` for the `ranger()` is the key for reproducibility!
+
+
+## 1. Build the model without workflow
+
+In this part, I did not use `workflow`. The idea is: split dataset --> train the model on the training set --> get the performance on training set --> fit the same model on testing set and get the performance on testing set.
+
+1.1 Split dataset.
+
+```{r}
+set.seed(123)
+data_split <- initial_split(cells, strata = class)
+data_train <- training(data_split)
+data_test <- testing(data_split)
+```
+
+1.2 Train model on training set.
+
+```{r}
+ranger_model <- rand_forest() %>%
+    set_mode("classification") %>%
+    set_engine("ranger", seed = 12)
+
+ranger_fit <- ranger_model %>% 
+    fit(class ~ ., data = data_train)
+```
+
+1.3 Check model performance on training set.
+
+```{r}
+rf_training_pred <- 
+    predict(ranger_fit, data_train) %>% 
+    bind_cols(predict(ranger_fit, data_train, type = "prob")) %>% 
+    bind_cols(data_train %>% select(class))
+
+rf_train_metrics <- rf_training_pred %>%   # training set predictions
+    roc_auc(truth = class, .pred_PS) %>% 
+    bind_rows(
+        rf_training_pred %>%
+    accuracy(truth = class, .pred_class)
+    ) %>% 
+    mutate(type = "train_set")
+```
+
+1.4 Fit the model on testing and check performance.
+
+```{r}
+rf_testing_pred <- 
+    predict(ranger_fit, data_test) %>% 
+    bind_cols(predict(ranger_fit, data_test, type = "prob")) %>% 
+    bind_cols(data_test %>% select(class)) 
+
+rf_test_metrics <- rf_testing_pred %>% 
+    roc_auc(truth = class, .pred_PS) %>% 
+    bind_rows(
+        rf_testing_pred %>% 
+            accuracy(truth = class, .pred_class)
+    ) %>% 
+    mutate(type = "test_set")
+```
+
+Plot AUROC and Accuracy measurements on training and testing set.
+
+```{r}
+plot_lollipop(rf_train_metrics, rf_test_metrics)
+```
+
+## 2. Train the model with workflow
+
+In the second part, I added a little block called `workflow`. It combines the *pre-processing* and *model* step together.
+
+2.1 Split dataset. Same as the first part.
+
+```{r class.source = 'fold-hide'}
+set.seed(123)
+data_split <- initial_split(cells, strata = class)
+data_train <- training(data_split)
+data_test <- testing(data_split)
+```
+
+2.2 Create model workflow
+
+```{r}
+ranger_recipe <- 
+    recipe(formula = class ~ ., data = data_train) 
+
+ranger_spec <-
+    rand_forest() %>%
+    set_mode("classification") %>%
+    set_engine("ranger", seed = 12)
+
+ranger_workflow <- workflow() %>% 
+    add_recipe(ranger_recipe) %>% 
+    add_model(ranger_spec)
+```
+
+2.3  Train the workflow on training set and get performance.
+
+Mostly same as part 1, but this time fit the *workflow*.
+
+```{r class.source = 'fold-hide'}
+ranger_fit <- fit(ranger_workflow, data = data_train)
+
+rf_training_pred <- 
+    predict(ranger_fit, data_train) %>% 
+    bind_cols(predict(ranger_fit, data_train, type = "prob")) %>% 
+    bind_cols(data_train %>% select(class))
+
+rf_train_metrics <- rf_training_pred %>%
+    roc_auc(truth = class, .pred_PS) %>% 
+    bind_rows(
+        rf_training_pred %>%
+    accuracy(truth = class, .pred_class)
+    ) %>% 
+    mutate(type = "train_set")
+```
+
+2.4 Fit the workflow on testing set and check performance.
+
+Same as part I.
+```{r class.source = 'fold-hide'}
+rf_testing_pred <- 
+    predict(ranger_fit, data_test) %>% 
+    bind_cols(predict(ranger_fit, data_test, type = "prob")) %>% 
+    bind_cols(data_test %>% select(class)) 
+
+rf_test_metrics <- rf_testing_pred %>% 
+    roc_auc(truth = class, .pred_PS) %>% 
+    bind_rows(
+        rf_testing_pred %>% 
+            accuracy(truth = class, .pred_class)
+    ) %>% 
+    mutate(type = "test_set")
+```
+
+```{r}
+plot_lollipop(rf_train_metrics, rf_test_metrics)
+```
+
+## 3. Add resampling
+
+In the third part, add resampling to the training process. This time I used 10 fold Cross Validation (CV). The purpose is to get a better measurement of the training model performance. It generated 10 models, but we do not use any of these models. When we predict, the model is trained using the whole training set and then is used to predict the testing set.
+
+Many of the step is the same
+
+3.1 Split dataset
+
+```{r class.source = 'fold-hide'}
+set.seed(123)
+data_split <- initial_split(cells, strata = class)
+data_train <- training(data_split)
+data_test <- testing(data_split)
+```
+
+3.2 Create CV set
+
+You can set `repeat = 5` to repeat the CV process for even better performance measurement.
+
+```{r}
+set.seed(234)
+data_folds <- vfold_cv(data_train, strata = class, repeats = 1)
+head(data_folds)
+```
+
+3.3 Create model workflow
+
+```{r class.source = 'fold-hide'}
+ranger_recipe <- 
+    recipe(formula = class ~ ., data = data_train) 
+
+ranger_spec <-
+    rand_forest() %>%
+    set_mode("classification") %>%
+    set_engine("ranger", seed = 13)
+
+ranger_workflow <- workflow() %>% 
+    add_recipe(ranger_recipe) %>% 
+    add_model(ranger_spec)
+```
+
+3.4 Train the model on the CV training set and get performance
+
+```{r}
+doParallel::registerDoParallel()
+set.seed(12345)
+ranger_rs <-
+    fit_resamples(ranger_workflow,
+                  resamples = data_folds,
+                  control = control_resamples(save_pred = TRUE)
+    )
+```
+
+Summarize the 10-fold CV.
+
+```{r}
+rf_train_metrics <- collect_metrics(ranger_rs, summarize = TRUE)
+rf_train_metrics
+
+## Process the metrics for plotting
+rf_train_metrics <- rf_train_metrics %>% rename(.estimate = mean) %>% 
+    select(-std_err, -.config, -n) %>% 
+    mutate(type = "train_set")
+```
+
+Performance on each fold.
+
+```{r}
+head(collect_metrics(ranger_rs, summarize = FALSE))
+```
+
+Plot the AUC plot.
+
+```{r}
+collect_predictions(ranger_rs) %>%
+    group_by(id) %>%
+    roc_curve(class, .pred_PS) %>%
+    autoplot()
+```
+
+Plot the confusion matrix.
+
+```{r}
+conf_mat_resampled(ranger_rs, tidy = FALSE) %>%
+    autoplot()
+```
+
+3.5 Fit the model on the testing set and get performance
+
+```{r}
+ranger_fit <- fit(ranger_workflow, data = data_train)
+
+rf_testing_pred <- 
+    predict(ranger_fit, data_test) %>% 
+    bind_cols(predict(ranger_fit, data_test, type = "prob")) %>% 
+    bind_cols(data_test %>% select(class)) 
+
+rf_test_metrics <- rf_testing_pred %>% 
+    roc_auc(truth = class, .pred_PS) %>% 
+    bind_rows(
+        rf_testing_pred %>% 
+            accuracy(truth = class, .pred_class)
+    ) %>% 
+    mutate(type = "test_set")
+```
+
+We can see the difference between training and testing is much smaller now!
+
+```{r}
+plot_lollipop(rf_train_metrics, rf_test_metrics)
+```
+Another way to fit the model on the testing set is to use `last_fit()`
+
+```{r}
+final_fitted <- last_fit(ranger_workflow, data_split)
+collect_metrics(final_fitted)
+```
+As long as you set the `seed` parameter for `ranger()`, then the results should be exactly the same. You can check all prediction values are the same
+
+```{r}
+sum(rf_testing_pred$.pred_PS != final_fitted$.predictions[[1]]$.pred_PS)
+```
+
+## 4. Add hyperparameter tunning
+
+In the last part, I added a tuning step.
+
+```{r, message=FALSE, warning=FALSE}
+library(vip)
+```
+
+
+4.1 Split data and create CV set
+
+```{r class.source = 'fold-hide'}
+set.seed(123)
+data_split <- initial_split(cells, strata = class)
+data_train <- training(data_split)
+data_test <- testing(data_split)
+
+set.seed(234)
+data_folds <- vfold_cv(data_train, strata = class, repeats = 1)
+head(data_folds)
+```
+
+4.2 Create workflow with tunning
+
+Include the `importance = "impurity"`, so we can get feature importance score latter.
+
+```{r}
+ranger_recipe <- 
+    recipe(formula = class ~ ., data = data_train) 
+
+ranger_spec <-
+    rand_forest(mtry = tune(), min_n = tune()) %>%
+    set_mode("classification") %>%
+    set_engine("ranger", seed = 13, importance = "impurity")
+
+ranger_workflow <- workflow() %>% 
+    add_recipe(ranger_recipe) %>% 
+    add_model(ranger_spec)
+
+ranger_param <- parameters(ranger_spec) %>% 
+    update(mtry = mtry(c(3, 20)),
+           min_n = min_n(c(2, 40)))
+
+# Use grid search.
+ranger_grid <- grid_regular(ranger_param, levels = c(mtry = 3, min_n = 2))
+
+ranger_grid
+```
+
+4.3 Tune the hyperparameters.
+
+```{r}
+doParallel::registerDoParallel()
+set.seed(12345)
+ranger_tune <-
+    tune_grid(ranger_workflow, 
+              resamples = data_folds, 
+              grid = ranger_grid)
+```
+
+Check performance
+
+```{r}
+head(ranger_tune %>% collect_metrics())
+```
+
+```{r}
+ranger_tune %>%
+    collect_metrics() %>%
+    mutate(mtry = factor(mtry)) %>%
+    ggplot(aes(min_n, mean, color = mtry)) +
+    geom_line(size = 1.5, alpha = 0.6) +
+    geom_point(size = 2) +
+    facet_wrap(~ .metric, scales = "free", nrow = 2) +
+    scale_color_viridis_d(option = "viridis", begin = .9, end = 0)+
+    theme_bw()
+```
+
+Get the best model
+
+```{r}
+ranger_tune %>% show_best("roc_auc")
+
+best_model <- ranger_tune %>%
+    select_best("roc_auc")
+
+best_model
+```
+
+4.4 Finalize the model/workflow and fit the training set
+
+```{r}
+final_wf <- 
+    ranger_workflow %>% 
+    finalize_workflow(best_model)
+
+final_wf
+```
+
+Fit training set
+```{r}
+final_model <- final_wf %>% fit(data_train)
+final_model
+```
+
+4.5 Explore feature importance
+
+```{r}
+final_model %>% 
+    pull_workflow_fit() %>% 
+    vip() + theme_bw()
+```
+
+4.6 Fit testing set and check performance
+
+```{r}
+final_fit <- 
+    final_wf %>%
+    last_fit(data_split) 
+```
+
+
+```{r}
+final_fit %>%
+    collect_metrics()
+
+final_fit %>%
+    collect_predictions() %>% 
+    roc_curve(class, .pred_PS) %>% 
+    autoplot()
+
+final_fit %>%
+    collect_predictions() %>% 
+    pr_curve(class, .pred_PS) %>% 
+    autoplot()
+```
