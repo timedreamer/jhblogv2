@@ -21,6 +21,18 @@ description: Description for the page
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+TOC:
+
+0. Prep
+
+1. Build the model without workflow
+
+2. Build the model with workflow
+
+3. Add resampling
+
+4. Add hyperparameter tunning
+
 Inspired by the Julia Silge's [blog](https://www.tidyverse.org/blog/2021/05/choose-tidymodels-adventure/). I want to try the tidymodels system by add blocks to the backbone. To keep it simple, I used `ranger` engine for a simple randome forest model on the [cells data](https://www.rdocumentation.org/packages/modeldata/versions/0.1.0/topics/cells) (comes with tidymodels). 
 
 ## 0. Prep
@@ -128,7 +140,7 @@ Plot AUROC and Accuracy measurements on training and testing set.
 plot_lollipop(rf_train_metrics, rf_test_metrics)
 ```
 
-## 2. Train the model with workflow
+## 2. Build the model with workflow
 
 In the second part, I added a little block called `workflow`. It combines the *pre-processing* and *model* step together.
 

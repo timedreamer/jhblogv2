@@ -20,6 +20,14 @@ description: Description for the page
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
+<p>TOC:</p>
+<ol start="0" style="list-style-type: decimal">
+<li><p>Prep</p></li>
+<li><p>Build the model without workflow</p></li>
+<li><p>Build the model with workflow</p></li>
+<li><p>Add resampling</p></li>
+<li><p>Add hyperparameter tunning</p></li>
+</ol>
 <p>Inspired by the Julia Silge’s <a href="https://www.tidyverse.org/blog/2021/05/choose-tidymodels-adventure/">blog</a>. I want to try the tidymodels system by add blocks to the backbone. To keep it simple, I used <code>ranger</code> engine for a simple randome forest model on the <a href="https://www.rdocumentation.org/packages/modeldata/versions/0.1.0/topics/cells">cells data</a> (comes with tidymodels).</p>
 <div id="prep" class="section level2">
 <h2>0. Prep</h2>
@@ -99,8 +107,8 @@ rf_test_metrics &lt;- rf_testing_pred %&gt;%
 <pre class="r"><code>plot_lollipop(rf_train_metrics, rf_test_metrics)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
-<div id="train-the-model-with-workflow" class="section level2">
-<h2>2. Train the model with workflow</h2>
+<div id="build-the-model-with-workflow" class="section level2">
+<h2>2. Build the model with workflow</h2>
 <p>In the second part, I added a little block called <code>workflow</code>. It combines the <em>pre-processing</em> and <em>model</em> step together.</p>
 <p>2.1 Split dataset. Same as the first part.</p>
 <pre class="r fold-hide"><code>set.seed(123)
