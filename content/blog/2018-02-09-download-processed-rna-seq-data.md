@@ -1,5 +1,5 @@
 ---
-title: Download processed RNA-Seq data from EBI 
+title: Download processed RNA-Seq data from EBI
 author: Ji Huang
 date: '2018-02-09'
 slug: download-processed-rna-seq-data
@@ -21,7 +21,11 @@ mathjax: no
 mathjaxEnableSingleDollar: no
 ---
 
-For my gene network projects, a majority of my time was spent on manually curate RNA-Seq data on SRA, download SRA data and align them on the maize genome. This week I found an API or resouece from EMBL, [RNASeq-er API][1] that already alligned RNA-Seq reads on genome for you. 
+**Update 2022-09-01** The [RNASeq-er API][1] no longer works for me. The FTP site may still work.
+
+----
+
+For my gene network projects, a majority of my time was spent on manually curate RNA-Seq data on SRA, download SRA data and align them on the maize genome. This week I found an API from EMBL, [RNASeq-er API][1] that already aligned RNA-Seq reads on genome for you.
 
 The paper ([The RNASeq-er API—a gateway to systematically updated analysis of public RNA-seq data][5] was published on Bioinformatics, 2017.
 
@@ -69,7 +73,7 @@ You will get Sample IDs, Mapping quality, genome version and download files FTP 
 
 ![Imgur](https://i.imgur.com/b1a5Mun.jpg)
 
-Actually, if you go to the FTP site of one library, for example SRR1583909, there are all files downloadable. These files include gene/transcript level expression, exon level expression, kallisto result and quality control result.  
+Actually, if you go to the FTP site of one library, for example SRR1583909, there are all files downloadable. These files include gene/transcript level expression, exon level expression, kallisto result and quality control result.
 
 ![Imgur](https://i.imgur.com/PzANi4K.jpg)
 
@@ -121,10 +125,6 @@ Search: **https://www.ebi.ac.uk/fg/rnaseq/api/tsv/getOrganismsMappingQuality**
 # 3. Summary
 
 I think this is awesome that EBI already processed the gene expression data FOR YOU! The only thing that can improve is to use HISAT2/STAR instead of TopHat2, since TopHat is out-dated.
-
-
-
-
 
 
 
