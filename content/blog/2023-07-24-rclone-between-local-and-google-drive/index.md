@@ -22,9 +22,11 @@ I set up the Google Drive as `jhGDrive`. You can check the name using `rclone co
 
 1. `tar -cf test.tar test_files/`. This is to tar multiple files or directories into one `.tar` file for quicker transfer. The `-c` option tells `tar` to create a new archive and the `-f` option specifies the name of the archive file. You can also add `-z` if you want to use the gzip to compress.
 
-2. `module load rclone/1.60.1`. 
+2. `ssh gdtn`. Connect to data transfer node from Greene. [detail](https://sites.google.com/nyu.edu/nyu-hpc/hpc-systems/hpc-storage/data-management/data-transfers)
 
-3. `rclone copy test.tar jhGDrive:hpc_uploads`. The `jhGDrive` is the Google drive link name that you set up. The `hpc_uploads` is the folder name. 
+3. `module load rclone/1.60.1`. 
 
-4. `rclone copy jhGDrive:hpc_uploads/test.tar .`. This is the transfer cloud file to local.
+4. `rclone copy test.tar jhGDrive:hpc_uploads`. The `jhGDrive` is the Google drive link name that you set up. The `hpc_uploads` is the folder name. 
+
+5. `rclone copy jhGDrive:hpc_uploads/test.tar .`. This is the transfer cloud file to local.
 
