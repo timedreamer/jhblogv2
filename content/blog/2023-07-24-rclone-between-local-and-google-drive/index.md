@@ -30,3 +30,11 @@ I set up the Google Drive as `jhGDrive`. You can check the name using `rclone co
 
 5. `rclone copy jhGDrive:hpc_uploads/test.tar .`. This is the transfer cloud file to local.
 
+---
+
+Extra:
+
+To find out what folders will be purged from `$SCRATCH`, use the following command. This will returns the folders up to **depth 3**. Just change the `-f1-5` to get to the 4th depth.
+
+`cut -d'/' -f1-4 /scratch/cleanup/60days-files/20240229/jh6577 | sort | uniq`
+
