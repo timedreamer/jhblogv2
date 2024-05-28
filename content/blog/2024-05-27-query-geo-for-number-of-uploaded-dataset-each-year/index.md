@@ -35,3 +35,35 @@ Here are the results for the **Human**. The sequencing is totally taken up the G
 ![](images/p2.png)
 
 ![](images/p3.png)
+
+Here are all the possible **Dataset Type**
+
+| Number 	| DataSet Type                                                       	|
+|--------	|--------------------------------------------------------------------	|
+| 1      	| expression profiling by array                                      	|
+| 2      	| expression profiling by genome tiling array                        	|
+| 3      	| expression profiling by snp array                                  	|
+| 4      	| genome binding/occupancy profiling by array                        	|
+| 5      	| genome binding/occupancy profiling by genome tiling array          	|
+| 6      	| genome binding/occupancy profiling by snp array                    	|
+| 7      	| genome variation profiling by array                                	|
+| 8      	| genome variation profiling by genome tiling array                  	|
+| 9      	| genome variation profiling by snp array                            	|
+| 10     	| methylation profiling by array                                     	|
+| 11     	| methylation profiling by genome tiling array                       	|
+| 12     	| methylation profiling by snp array                                 	|
+| 13     	| non coding rna profiling by array                                  	|
+| 14     	| non coding rna profiling by genome tiling array                    	|
+| 15     	| protein profiling by protein array                                 	|
+| 16     	| snp genotyping by snp array                                        	|
+| 20     	| expression profiling by high throughput sequencing                 	|
+| 21     	| genome binding/occupancy profiling by high throughput   sequencing 	|
+| 22     	| genome variation profiling by high throughput sequencing           	|
+| 23     	| methylation profiling by high throughput sequencing                	|
+| 24     	| non coding rna profiling by high throughput sequencing             	|
+| 26     	| protein profiling by mass spec                                     	|
+| 27     	| third party reanalysis                                             	|
+| 17     	| expression profiling by mpss                                       	|
+| 18     	| expression profiling by rt pcr                                     	|
+| 19     	| expression profiling by sage                                       	|
+| 25     	| other                                                              	|
