@@ -2,4 +2,4 @@ This is my blog built on blogdown using theme: [nanxstats/hugo-tanka](https://gi
 
 Update irregularly.
 
-https://jhuang.netlify.com/
+https://jhuang.netlify.app/
