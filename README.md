@@ -10,6 +10,10 @@ This is my Hugo blog using [hugo-PaperMod](https://github.com/adityatelange/hugo
 Workflow:
 1. Develop and preview locally in WSL2.
 2. Commit and push to GitHub.
-3. Netlify builds and deploys from GitHub.
+3. Netlify builds and deploys from GitHub (`main` production branch).
+
+Notes:
+- Theme is managed via git submodule at `themes/PaperMod` (Netlify uses `GIT_SUBMODULE_STRATEGY=recursive` from `netlify.toml`).
+- Legacy R/blogdown version is archived on branch `archive/blogdown-r` (read-only).
 
 Site URL: https://jhuang.netlify.app/

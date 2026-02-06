@@ -31,6 +31,7 @@ There is no dedicated automated test suite in this repository.
 ## Commit & Pull Request Guidelines
 - Follow the existing commit style: short, imperative messages (for example, `add zotero shortcut post`, `update website`).
 - Keep commits focused to one logical change.
+- Primary development and deployment branch is `main`. The previous blogdown site is archived on `archive/blogdown-r` (read-only).
 - PRs should include:
   - a concise summary,
   - affected paths (for example, `content/blog/...`, `layouts/...`),
@@ -38,5 +39,5 @@ There is no dedicated automated test suite in this repository.
   - screenshots for visible layout/style changes.
 
 ## Security & Configuration Tips
-- Do not commit generated outputs or local state: `public/`, `resources/`, `.Rhistory`, `.RData`, `.Rproj.user/`.
+- Do not commit generated outputs or local state: `public/`, `resources/`, `.hugo_build.lock`, `.Rhistory`, `.RData`, `.Rproj.user/`.
 - Never commit credentials, API keys, or private tokens in content or config files.
