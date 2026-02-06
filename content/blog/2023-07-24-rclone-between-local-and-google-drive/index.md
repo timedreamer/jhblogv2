@@ -2,7 +2,6 @@
 title: rclone between local and Google Drive
 author: Ji Huang
 date: '2023-07-24'
-slug: []
 categories:
   - dry lab
 tags:

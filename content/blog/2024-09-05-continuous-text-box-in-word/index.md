@@ -2,7 +2,6 @@
 title: Continuous text box in Word
 author: Ji Huang
 date: '2024-09-05'
-slug: []
 categories:
   - misc
 tags:

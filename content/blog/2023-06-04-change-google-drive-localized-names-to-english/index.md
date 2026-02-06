@@ -2,7 +2,6 @@
 title: Change Google Drive localized names to English
 author: Ji Huang
 date: '2023-06-04'
-slug: []
 categories:
   - misc
 tags:

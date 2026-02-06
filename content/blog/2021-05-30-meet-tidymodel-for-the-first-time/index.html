@@ -2,7 +2,6 @@
 title: Meet tidymodel for the first time
 author: Ji Huang
 date: '2021-05-30'
-slug: []
 categories:
   - dry lab
 tags:
@@ -12,7 +11,7 @@ meta_img: images/image.png
 description: Description for the page
 ---
 
-<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="index_files/header-attrs/header-attrs.js"></script>
 
 
 <p>I’ve known the <code>tidymodel</code> framework for a while, but never tried it. <a href="https://www.tidymodels.org/">Tidymodel</a> is the new framework from <em>Max Kuhn</em>, the author of <code>caret</code> framework in R. In the past week, I read the <a href="https://www.tmwr.org/">Tidy Modeling with R</a> book and tried <code>tidymodel</code> system for the first time.</p>
@@ -150,11 +149,11 @@ ranger_rs &lt;-
     group_by(id) %&gt;%
     roc_curve(label, .pred_cancer) %&gt;%
     autoplot()</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>Averaged confusion matrix.</p>
 <pre class="r"><code>conf_mat_resampled(ranger_rs, tidy = FALSE) %&gt;%
     autoplot()</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 </div>
 <div id="fit-testing-set" class="section level3">
 <h3>2.8 Fit Testing set</h3>
@@ -185,7 +184,7 @@ collect_metrics(final_fitted) </code></pre>
 <pre class="r"><code>collect_predictions(final_fitted) %&gt;%
     conf_mat(label, .pred_class) %&gt;%
     autoplot()</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 </div>
 </div>
 <div id="extra" class="section level2">

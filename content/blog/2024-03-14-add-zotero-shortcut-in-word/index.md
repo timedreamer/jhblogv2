@@ -2,7 +2,6 @@
 title: Add Zotero shortcut in Word
 author: Ji Huang
 date: '2024-03-14'
-slug: []
 categories:
   - misc
 tags:

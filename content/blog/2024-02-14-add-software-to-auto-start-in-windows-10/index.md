@@ -2,7 +2,6 @@
 title: "Add software to auto-start in Windows 10 "
 author: "Ji Huang"
 date: "2024-02-14"
-slug: []
 categories: misc
 tags:
 - Windows

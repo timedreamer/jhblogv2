@@ -2,7 +2,6 @@
 title: View code from jupyter notebook in the terminal
 author: Ji Huang
 date: '2025-03-20'
-slug: []
 categories:
   - dry lab
 tags:

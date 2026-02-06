@@ -1,7 +1,6 @@
 ---
 date: "2021-05-30"
 description: about myself
-menu: main
 title: About me
 ---
 

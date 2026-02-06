@@ -2,7 +2,6 @@
 title: Query GEO for number of uploaded datasets each year
 author: Ji Huang
 date: '2024-05-27'
-slug: []
 categories:
   - dry lab
 tags:

@@ -1,8 +1,10 @@
 [build]
 command = "hugo"
 publish = "public"
+
 [build.environment]
-HUGO_VERSION = "0.83.1"
+HUGO_VERSION = "0.146.0"
+GIT_SUBMODULE_STRATEGY = "recursive"
 
 [context]
 [context.branch-deploy]

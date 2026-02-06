@@ -2,7 +2,6 @@
 title: Handy AutoHotKey scripts
 author: Ji Huang
 date: '2025-08-17'
-slug: []
 categories:
   - dry lab
 tags:

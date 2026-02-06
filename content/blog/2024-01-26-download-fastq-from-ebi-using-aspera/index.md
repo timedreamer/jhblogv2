@@ -2,7 +2,6 @@
 title: "Download fastq from EBI using Aspera"
 author: "Ji Huang"
 date: "2024-01-26"
-slug: []
 categories: dry lab
 tags:
 - bioinformatics

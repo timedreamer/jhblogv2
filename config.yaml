@@ -1,44 +1,47 @@
-baseurl: https://jhuang.netlify.app/
+baseurl: "https://jhuang.netlify.app/"
 title: "Dreaming time - a blog by Ji Huang"
 author: "Ji Huang"
-canonifyurls: yes
-languagecode: en
-theme: hugo-tanka
-enableEmoji: yes
-hasCJKLanguage: no
-pygmentsstyle: vs
-pygmentscodefences: yes
-ignoreFiles:
-  - \.Rmd$
-  - \.Rmarkdown$
-  - _cache$
-  - \.knit\.md$
-  - \.utf8\.md$
+canonifyurls: true
+languageCode: en-us
+theme:
+    - PaperMod
+enableEmoji: true
+
 params:
-  faviconfile: images/favicon1.png
-  highlightjs: yes
-  highlightjslanguages:
-    - r
-    - python
-    - stan
-  progressively: no
-  sitename: "Dreaming time"
-  uselatex: yes
+    env: production
+    title: "Dreaming time"
+    description: "Dreaming time - a blog by Ji Huang"
+    author: "Ji Huang"
+    defaultTheme: auto
+    disableThemeToggle: false
+    ShowReadingTime: true
+    ShowPostNavLinks: true
+    ShowBreadCrumbs: true
+    ShowCodeCopyButtons: true
+    ShowShareButtons: false
+    ShowToc: false
+    disableSpecial1stPost: true
+    mainSections:
+        - blog
+    assets:
+        favicon: "images/favicon1.png"
+
 markup:
-  goldmark:
-    renderer:
-      unsafe: yes
+    goldmark:
+        renderer:
+            unsafe: true
+
 menu:
-  primary:
-    - name: Home
-      url: /
-      weight: 1
-    - name: About
-      url: /about/
-      weight: 2
-    - name: Twitter
-      url: https://twitter.com/ji_timedreamer
-      weight: 4
-    - name: Subscribe
-      url: /index.xml
-      weight: 5
+    main:
+        - name: Home
+          url: /
+          weight: 1
+        - name: About
+          url: /about/
+          weight: 2
+        - name: Twitter
+          url: https://twitter.com/ji_timedreamer
+          weight: 4
+        - name: Subscribe
+          url: /index.xml
+          weight: 5

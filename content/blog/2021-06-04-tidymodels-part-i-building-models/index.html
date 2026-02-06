@@ -6,7 +6,6 @@ output:
     html_document:
         toc: true
         code_folding: show
-slug: []
 categories:
   - dry lab
 tags:
@@ -17,7 +16,7 @@ description: Description for the page
 
 ---
 
-<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="index_files/header-attrs/header-attrs.js"></script>
 
 
 <p>TOC:</p>
@@ -105,7 +104,7 @@ rf_test_metrics &lt;- rf_testing_pred %&gt;%
     mutate(type = &quot;test_set&quot;)</code></pre>
 <p>Plot AUROC and Accuracy measurements on training and testing set.</p>
 <pre class="r"><code>plot_lollipop(rf_train_metrics, rf_test_metrics)</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 <div id="build-the-model-with-workflow" class="section level2">
 <h2>2. Build the model with workflow</h2>
@@ -158,7 +157,7 @@ rf_test_metrics &lt;- rf_testing_pred %&gt;%
     ) %&gt;% 
     mutate(type = &quot;test_set&quot;)</code></pre>
 <pre class="r"><code>plot_lollipop(rf_train_metrics, rf_test_metrics)</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
 <div id="add-resampling" class="section level2">
 <h2>3. Add resampling</h2>
@@ -231,11 +230,11 @@ rf_train_metrics &lt;- rf_train_metrics %&gt;% rename(.estimate = mean) %&gt;%
     group_by(id) %&gt;%
     roc_curve(class, .pred_PS) %&gt;%
     autoplot()</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <p>Plot the confusion matrix.</p>
 <pre class="r"><code>conf_mat_resampled(ranger_rs, tidy = FALSE) %&gt;%
     autoplot()</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>3.5 Fit the model on the testing set and get performance</p>
 <pre class="r"><code>ranger_fit &lt;- fit(ranger_workflow, data = data_train)
 
@@ -253,7 +252,7 @@ rf_test_metrics &lt;- rf_testing_pred %&gt;%
     mutate(type = &quot;test_set&quot;)</code></pre>
 <p>We can see the difference between training and testing is much smaller now!</p>
 <pre class="r"><code>plot_lollipop(rf_train_metrics, rf_test_metrics)</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+<p><img src="index_files/figure-html/unnamed-chunk-22-1.png" width="672" />
 Another way to fit the model on the testing set is to use <code>last_fit()</code></p>
 <pre class="r"><code>final_fitted &lt;- last_fit(ranger_workflow, data_split)
 collect_metrics(final_fitted)</code></pre>
@@ -346,7 +345,7 @@ ranger_tune &lt;-
     facet_wrap(~ .metric, scales = &quot;free&quot;, nrow = 2) +
     scale_color_viridis_d(option = &quot;viridis&quot;, begin = .9, end = 0)+
     theme_bw()</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <p>Get the best model</p>
 <pre class="r"><code>ranger_tune %&gt;% show_best(&quot;roc_auc&quot;)</code></pre>
 <pre><code>## # A tibble: 5 x 8
@@ -419,7 +418,7 @@ final_model</code></pre>
 <pre class="r"><code>final_model %&gt;% 
     pull_workflow_fit() %&gt;% 
     vip() + theme_bw()</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 <p>4.6 Fit testing set and check performance</p>
 <pre class="r"><code>final_fit &lt;- 
     final_wf %&gt;%
@@ -435,10 +434,10 @@ final_model</code></pre>
     collect_predictions() %&gt;% 
     roc_curve(class, .pred_PS) %&gt;% 
     autoplot()</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
 <pre class="r"><code>final_fit %&gt;%
     collect_predictions() %&gt;% 
     pr_curve(class, .pred_PS) %&gt;% 
     autoplot()</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-36-2.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-36-2.png" width="672" /></p>
 </div>

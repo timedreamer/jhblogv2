@@ -2,7 +2,6 @@
 title: Copy a table from R to clipboard
 author: Ji Huang
 date: '2023-09-11'
-slug: []
 categories:
   - dry lab
 tags:

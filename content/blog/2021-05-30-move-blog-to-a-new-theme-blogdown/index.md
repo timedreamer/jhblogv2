@@ -2,7 +2,6 @@
 title: Move blog to a new theme (blogdown)
 author: Ji Huang
 date: '2021-05-30'
-slug: []
 categories:
   - dry lab
 tags:
