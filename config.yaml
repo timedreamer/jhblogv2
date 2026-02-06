@@ -41,8 +41,8 @@ menu:
         - name: About
           url: /about/
           weight: 2
-        - name: Twitter
-          url: https://twitter.com/ji_timedreamer
+        - name: LinkedIn
+          url: https://www.linkedin.com/in/ji-huang-106b634a/
           weight: 4
         - name: Subscribe
           url: /index.xml
