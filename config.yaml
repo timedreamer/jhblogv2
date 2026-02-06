@@ -12,6 +12,8 @@ params:
     title: "Dreaming time"
     description: "Dreaming time - a blog by Ji Huang"
     author: "Ji Huang"
+    hideSummary: true
+    ShowPageNums: true
     defaultTheme: auto
     disableThemeToggle: false
     ShowReadingTime: true
