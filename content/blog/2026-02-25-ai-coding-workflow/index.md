@@ -36,7 +36,7 @@ Make the AI read the relevant parts of the codebase and document what it finds. 
 
 **Prompt:**
 
-```
+```text
 Read the [insert target directory/files] in depth. Understand the architecture,
 data structures, domain-specific logic, and dependencies. Write a comprehensive
 report of findings in `research.md`. Do not output a verbal summary in the chat.
@@ -52,7 +52,7 @@ Once research is done, **ask the AI to draft a concrete plan based strictly on w
 
 **Prompt:**
 
-```
+```text
 Draft a detailed implementation plan for [insert target objective] and save it
 to `plan.md`. Base the plan strictly on the research phase and the actual
 codebase. Include code snippets, modified file paths, algorithmic approaches,
