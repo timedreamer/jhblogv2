@@ -15,9 +15,9 @@ description: Inspired by Boris Tane's post, a research → planning → annotati
 
 > This post is inspired by [Boris Tane's blog post on how he uses Claude Code](https://boristane.com/blog/how-i-use-claude-code).
 
-The most common way AI coding goes wrong isn't that the model is incapable — it's that you let it start writing code before it understands what it's working with. AI will make assumptions, fill in gaps with common patterns, and hand you something that looks plausible but doesn't fit your actual architecture.
+The most common way AI coding goes wrong isn't that the model is incapable — it's that you let it start writing code **before it understands what it's working with**. AI will make assumptions, fill in gaps with common patterns, and hand you something that looks plausible but doesn't fit your actual architecture.
 
-Boris Tane's workflow fixes this by front-loading the human review. The core idea: force the AI to fully understand the codebase first, generate a concrete plan second, let you annotate and correct that plan third, and only then give it the green light to execute.
+Boris Tane's workflow fixes this by **front-loading the human review**. The core idea: force the AI to fully understand the codebase first, generate a concrete plan second, let you annotate and correct that plan third, and only then give it the green light to execute.
 
 ```text
 ┌────────────┐   ┌────────────┐   ┌────────────┐   ┌────────────┐   ┌────────────┐
@@ -32,7 +32,7 @@ Boris Tane's workflow fixes this by front-loading the human review. The core ide
 
 ## Step 1: Force Deep Research
 
-Before any code is written, make the AI read the relevant parts of the codebase and document what it finds. Critically, require it to write the findings to a file — not just summarize them in the chat.
+Before any code is written, make the AI read the relevant parts of the codebase and document what it finds. Critically, require it to **write the findings to a file** — not just summarize them in the chat.
 
 **Prompt:**
 
@@ -42,13 +42,13 @@ data structures, domain-specific logic, and dependencies. Write a comprehensive
 report of findings in `research.md`. Do not output a verbal summary in the chat.
 ```
 
-Writing to `research.md` serves a few purposes: the output is persistent, reviewable, and can be explicitly referenced in later steps. A chat summary evaporates; a file stays.
+Writing to `research.md` serves a few purposes: the output is persistent, reviewable, and can be explicitly referenced in later steps. **A chat summary evaporates; a file stays.**
 
 ---
 
 ## Step 2: Generate an Implementation Plan
 
-With the research in place, ask the AI to draft a concrete plan based strictly on what it found — not on general best practices or guesswork.
+With the research in place, **ask the AI to draft a concrete plan based strictly on what it found** — not on general best practices or guesswork.
 
 **Prompt:**
 
@@ -76,7 +76,7 @@ I added inline notes to `plan.md`. Address all notes and update the document
 accordingly. Do not implement any code yet.
 ```
 
-The "do not implement any code yet" constraint matters. Keeping planning and execution separate prevents the AI from quietly starting to write code while ostensibly just updating the plan.
+The "do not implement any code yet" constraint matters. **Keeping planning and execution separate** prevents the AI from quietly starting to write code while ostensibly just updating the plan.
 
 ---
 
@@ -126,4 +126,4 @@ The workflow isn't complicated. The discipline is in not skipping steps — espe
 | Break down | Decompose into a sequential task list | `plan.md` (with todo) |
 | Implement | Execute all tasks without stopping | Code changes |
 
-The real value isn't any single prompt — it's the structured handoff between steps, and the mandatory human checkpoint before execution begins.
+The real value isn't any single prompt — it's the structured handoff between steps, and the **mandatory human checkpoint** before execution begins.
