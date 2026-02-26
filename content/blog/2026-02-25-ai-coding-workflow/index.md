@@ -71,7 +71,7 @@ Then hand it back:
 
 **Prompt:**
 
-```
+```text
 I added inline notes to `plan.md`. Address all notes and update the document
 accordingly. Do not implement any code yet.
 ```
@@ -86,7 +86,7 @@ Once the plan is solid, ask the AI to break it into a sequential checklist, appe
 
 **Prompt:**
 
-```
+```text
 Append a detailed, sequential todo list to `plan.md` outlining all phases and
 individual tasks necessary to complete the plan. Do not implement any code yet.
 ```
@@ -101,7 +101,7 @@ The plan is done. Let the AI implement:
 
 **Prompt:**
 
-```
+```text
 You are the world's greatest coder. Try your absolute best. Do not stop until
 you succeed. Iterate, debug, optimize, fix every issue until perfect. Never give
 up. Implement all tasks. Mark each as completed in `plan.md` as you finish them.
