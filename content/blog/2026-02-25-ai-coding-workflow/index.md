@@ -15,9 +15,9 @@ description: Inspired by Boris Tane's post, a research → planning → annotati
 
 > This post is inspired by [Boris Tane's blog post on how he uses Claude Code](https://boristane.com/blog/how-i-use-claude-code).
 
-The most common way AI coding goes wrong isn't that the model is incapable — it's that you let it start writing code **before it understands what it's working with**. AI will make assumptions, fill in gaps with common patterns, and hand you something that looks plausible but doesn't fit your actual architecture.
+AI coding usually goes wrong the same way: you let it start writing code **before it understands what it's working with**. It makes assumptions, fills gaps with common patterns, and hands you something that compiles but doesn't fit your actual architecture.
 
-Boris Tane's workflow fixes this by **front-loading the human review**. The core idea: force the AI to fully understand the codebase first, generate a concrete plan second, let you annotate and correct that plan third, and only then give it the green light to execute.
+Boris Tane's fix is **front-loading the human review**. Force the AI to fully understand the codebase first, generate a concrete plan second, annotate and correct that plan third — and only then let it write code.
 
 ```text
 ┌────────────┐   ┌────────────┐   ┌────────────┐   ┌────────────┐   ┌────────────┐
@@ -32,7 +32,7 @@ Boris Tane's workflow fixes this by **front-loading the human review**. The core
 
 ## Step 1: Force Deep Research
 
-Before any code is written, make the AI read the relevant parts of the codebase and document what it finds. Critically, require it to **write the findings to a file** — not just summarize them in the chat.
+Make the AI read the relevant parts of the codebase and document what it finds. The key constraint: require it to **write the findings to a file**, not just summarize them in the chat.
 
 **Prompt:**
 
@@ -42,13 +42,13 @@ data structures, domain-specific logic, and dependencies. Write a comprehensive
 report of findings in `research.md`. Do not output a verbal summary in the chat.
 ```
 
-Writing to `research.md` serves a few purposes: the output is persistent, reviewable, and can be explicitly referenced in later steps. **A chat summary evaporates; a file stays.**
+The file is persistent, reviewable, and referenceable in later steps. **A chat summary evaporates; a file stays.**
 
 ---
 
 ## Step 2: Generate an Implementation Plan
 
-With the research in place, **ask the AI to draft a concrete plan based strictly on what it found** — not on general best practices or guesswork.
+Once research is done, **ask the AI to draft a concrete plan based strictly on what it found**, not on general best practices or guesswork.
 
 **Prompt:**
 
@@ -65,7 +65,7 @@ The key word is *concrete*. `plan.md` should name specific files, include actual
 
 ## Step 3: Annotate the Plan
 
-This is where you step in. Read through `plan.md` and insert inline notes directly into the document: flag wrong assumptions, add business logic the AI didn't know about, reject approaches that conflict with your architecture, or clarify ambiguous requirements.
+Your turn. Read through `plan.md` and add inline notes: flag wrong assumptions, fill in business logic the AI didn't know about, push back on approaches that conflict with your architecture, clarify ambiguous requirements.
 
 Then hand it back:
 
@@ -76,13 +76,13 @@ I added inline notes to `plan.md`. Address all notes and update the document
 accordingly. Do not implement any code yet.
 ```
 
-The "do not implement any code yet" constraint matters. **Keeping planning and execution separate** prevents the AI from quietly starting to write code while ostensibly just updating the plan.
+That "do not implement any code yet" line matters more than it looks. Without it, the AI will often start writing code while it's supposedly just revising the plan. **Keeping planning and execution separate** is the whole discipline here.
 
 ---
 
 ## Step 4: Generate a Task Breakdown
 
-Once the plan is solid, ask the AI to decompose it into a sequential, trackable checklist — appended to `plan.md`.
+Once the plan is solid, ask the AI to break it into a sequential checklist, appended to `plan.md`.
 
 **Prompt:**
 
@@ -91,13 +91,13 @@ Append a detailed, sequential todo list to `plan.md` outlining all phases and
 individual tasks necessary to complete the plan. Do not implement any code yet.
 ```
 
-This checklist does two things: it makes execution auditable as each task gets checked off, and it gives you a clean resume point if the session gets interrupted mid-way.
+As tasks get checked off you can see exactly where the AI is. If the session gets cut off, you have a clear place to pick back up.
 
 ---
 
 ## Step 5: Execute Without Interruption
 
-With a reviewed, annotated, and checksummed plan in hand, release the AI to implement:
+The plan is done. Let the AI implement:
 
 **Prompt:**
 
@@ -110,20 +110,20 @@ strict coding standards and continuously run relevant tests or validation script
 to ensure no regressions.
 ```
 
-The assertive tone is deliberate. By this point the AI has full context and a verified task list — there's no reason to hedge. Requiring it to mark tasks complete in `plan.md` as it goes keeps the execution traceable.
+The blunt tone is intentional. The AI has full context and a verified task list — nothing to hedge on. Having it mark each task done as it goes keeps the execution traceable (although in practice, I found coding agents many times forgot to mark the to-do list). 
 
 ---
 
 ## Summary
 
-The workflow isn't complicated. The discipline is in not skipping steps — especially not letting the AI start writing code before the plan has been reviewed and corrected.
+The workflow is simple. The discipline is not skipping steps, especially not letting the AI write code before you've reviewed and corrected the plan.
 
 | Step | Action | Output |
 |------|--------|--------|
-| Research | Deep-read the target codebase | `research.md` |
-| Plan | Draft a concrete implementation plan | `plan.md` |
-| Annotate | Insert inline corrections and constraints | `plan.md` (revised) |
-| Break down | Decompose into a sequential task list | `plan.md` (with todo) |
-| Implement | Execute all tasks without stopping | Code changes |
+| **Research** | Deep-read the target codebase | `research.md` |
+| **Plan** | Draft a concrete implementation plan | `plan.md` |
+| **Annotate** | Insert inline corrections and constraints | `plan.md` (revised) |
+| **Break down** | Decompose into a sequential task list | `plan.md` (with todo) |
+| **Implement** | Execute all tasks without stopping | Code changes |
 
-The real value isn't any single prompt — it's the structured handoff between steps, and the **mandatory human checkpoint** before execution begins.
+What makes it work is the structured handoff between steps and the **mandatory human checkpoint** before execution. No single prompt does that.
