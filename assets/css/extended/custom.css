@@ -1,0 +1,5 @@
+/* Wrap plain-text code blocks (```text) without affecting real code blocks */
+.highlight pre code.language-text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
