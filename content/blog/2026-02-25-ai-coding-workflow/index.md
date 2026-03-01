@@ -37,9 +37,7 @@ Make the AI read the relevant parts of the codebase and document what it finds. 
 **Prompt:**
 
 ```text
-Read the [insert target directory/files] in depth. Understand the architecture,
-data structures, domain-specific logic, and dependencies. Write a comprehensive
-report of findings in `research.md`. Do not output a verbal summary in the chat.
+Read the [insert target directory/files] in depth. Understand the architecture, data structures, domain-specific logic, and dependencies. Write a comprehensive report of findings in `research.md`. Do not output a verbal summary in the chat.
 ```
 
 The file is persistent, reviewable, and referenceable in later steps. **A chat summary evaporates; a file stays.**
@@ -53,10 +51,7 @@ Once research is done, **ask the AI to draft a concrete plan based strictly on w
 **Prompt:**
 
 ```text
-Draft a detailed implementation plan for [insert target objective] and save it
-to `plan.md`. Base the plan strictly on the research phase and the actual
-codebase. Include code snippets, modified file paths, algorithmic approaches,
-and domain-specific trade-offs.
+Draft a detailed implementation plan for [insert target objective] and save it to `plan.md`. Base the plan strictly on the research phase and the actual codebase. Include code snippets, modified file paths, algorithmic approaches, and domain-specific trade-offs.
 ```
 
 The key word is *concrete*. `plan.md` should name specific files, include actual code snippets, and acknowledge trade-offs relevant to your codebase. Vague plans ("update the auth module") leave too much room for the AI to improvise during execution.
@@ -72,8 +67,7 @@ Then hand it back:
 **Prompt:**
 
 ```text
-I added inline notes to `plan.md`. Address all notes and update the document
-accordingly. Do not implement any code yet.
+I added inline notes to `plan.md`. Address all notes and update the document accordingly. Do not implement any code yet.
 ```
 
 That "do not implement any code yet" line matters more than it looks. Without it, the AI will often start writing code while it's supposedly just revising the plan. **Keeping planning and execution separate** is the whole discipline here.
@@ -87,8 +81,7 @@ Once the plan is solid, ask the AI to break it into a sequential checklist, appe
 **Prompt:**
 
 ```text
-Append a detailed, sequential todo list to `plan.md` outlining all phases and
-individual tasks necessary to complete the plan. Do not implement any code yet.
+Append a detailed, sequential todo list to `plan.md` outlining all phases and individual tasks necessary to complete the plan. Do not implement any code yet.
 ```
 
 As tasks get checked off you can see exactly where the AI is. If the session gets cut off, you have a clear place to pick back up.
@@ -102,12 +95,7 @@ The plan is done. Let the AI implement:
 **Prompt:**
 
 ```text
-You are the world's greatest coder. Try your absolute best. Do not stop until
-you succeed. Iterate, debug, optimize, fix every issue until perfect. Never give
-up. Implement all tasks. Mark each as completed in `plan.md` as you finish them.
-Do not stop until all tasks are completed. Omit unnecessary comments. Maintain
-strict coding standards and continuously run relevant tests or validation scripts
-to ensure no regressions.
+You are the world's greatest coder. Try your absolute best. Do not stop until you succeed. Iterate, debug, optimize, fix every issue until perfect. Never give up. Implement all tasks. Mark each as completed in `plan.md` as you finish them. Do not stop until all tasks are completed. Omit unnecessary comments. Maintain strict coding standards and continuously run relevant tests or validation scripts to ensure no regressions.
 ```
 
 The blunt tone is intentional. The AI has full context and a verified task list — nothing to hedge on. Having it mark each task done as it goes keeps the execution traceable (although in practice, I found coding agents many times forgot to mark the to-do list). 
