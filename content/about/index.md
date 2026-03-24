@@ -6,22 +6,12 @@ title: About me
 
 ![My bio picture](my-bio.png)
 
-My name is Ji Huang. I'm a post-doc at [Dr. Gloria Coruzzi lab][7] at NYU. I did my PhD in [Dr. Karen McGinnis][1] lab at Florida State University. I got my Bachelor degree in biological science from [Huazhong Agricultural University][5], China.
+My name is Ji Huang. I'm a Senior Bioinformatician at [Insilicom LLC](https://insilicom.com/), where I build LLM-powered pipelines for large-scale genomic data harmonization and biomedical text mining. Before that, I was a Postdoc at [Dr. Gloria Coruzzi's lab](http://coruzzilab.bio.nyu.edu/) at New York University. I also taught bioinformatics as Adjunct Faculty at NYU Tandon. I did my PhD in [Dr. Karen McGinnis's lab](http://www.bio.fsu.edu/faculty.php?faculty-id=mcginnis) at Florida State University.
 
-My primary research interest is to uncover plant gene regulatory mechanisms using high-throughput omics data, statistics, and machine learning methods. Coupled with advanced gene editing techniques, I hope to translate the basic discoveries to practical outcomes in the field, such as developing crop varieties with superior nitrogen and water usage under the marginal soils. 
+My background spans genomics, machine learning, and applied AI. At Insilicom, I design multi-LLM orchestration systems and evaluation frameworks for harmonizing metadata across 1M+ human samples. I also build NER and relation extraction pipelines for 40,000+ PubMed abstracts. In my academic research, I developed computational methods to uncover gene regulatory networks and cross-species conserved regulators of nitrogen use efficiency in plants.
 
 Find me at:
 
-  - [Google Scholar][2]
-  - [ResearchGate][3]
-  - [Github][4]
-  - [LinkedIn][6]
-
-
-[1]:http://www.bio.fsu.edu/faculty.php?faculty-id=mcginnis
-[2]:https://scholar.google.com/citations?user=WLWSBOIAAAAJ&hl=en
-[3]:https://www.researchgate.net/profile/Ji_Huang4
-[4]:https://github.com/timedreamer
-[5]:http://www.hzau.edu.cn/
-[6]:https://www.linkedin.com/in/ji-huang-106b634a
-[7]:http://coruzzilab.bio.nyu.edu/
+- [Google Scholar](https://scholar.google.com/citations?user=WLWSBOIAAAAJ&hl=en)
+- [Github](https://github.com/timedreamer)
+- [LinkedIn](https://www.linkedin.com/in/ji-huang-106b634a)
