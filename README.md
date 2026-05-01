@@ -13,7 +13,7 @@ Workflow:
 3. Netlify builds and deploys from GitHub (`main` production branch).
 
 Notes:
-- Theme is managed via git submodule at `themes/PaperMod` (Netlify uses `GIT_SUBMODULE_STRATEGY=recursive` from `netlify.toml`).
+- Theme is managed via git submodule at `themes/PaperMod`; Netlify fetches it in the build command with `git submodule update --init --recursive`.
 - Legacy R/blogdown version is archived on branch `archive/blogdown-r` (read-only).
 
 Site URL: https://jhuang.netlify.app/

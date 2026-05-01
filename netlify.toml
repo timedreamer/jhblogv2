@@ -1,16 +1,15 @@
 [build]
-command = "hugo"
+command = "git submodule update --init --recursive && hugo"
 publish = "public"
 
 [build.environment]
 HUGO_VERSION = "0.146.0"
-GIT_SUBMODULE_STRATEGY = "recursive"
 
 [context]
 [context.branch-deploy]
-command = "hugo -F -b $DEPLOY_PRIME_URL"
+command = "git submodule update --init --recursive && hugo -F -b $DEPLOY_PRIME_URL"
 [context.deploy-preview]
-command = "hugo -F -b $DEPLOY_PRIME_URL"
+command = "git submodule update --init --recursive && hugo -F -b $DEPLOY_PRIME_URL"
 [context.production]
 [context.production.environment]
 HUGO_ENV = "production"
