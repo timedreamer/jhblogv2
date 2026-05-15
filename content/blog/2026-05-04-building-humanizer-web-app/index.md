@@ -22,7 +22,7 @@ Three hours total. Thirty-three cents in API costs.
 
 ## The plan
 
-I used [planning-with-files](https://github.com/othmanadi/planning-with-files) and the [brainstorming skill](https://github.com/obra/superpowers/blob/main/skills/brainstorming/SKILL.md) to think through what I actually wanted before writing any code. The answer was Streamlit: pure Python, free hosting on Streamlit Community Cloud, and password protection out of the box. No React, no build pipelines.
+I used [planning-with-files](https://github.com/othmanadi/planning-with-files) and the [brainstorming skill](https://github.com/obra/superpowers/blob/main/skills/brainstorming/SKILL.md) to think through what I actually wanted before writing any code. The answer was Streamlit: pure Python, free hosting on Streamlit Community Cloud, and a simple password gate to keep bots away. No React, no build pipelines.
 
 ## Building with CC + DeepSeek V4
 
@@ -50,6 +50,14 @@ The cache hit ratio was stable at 98.6% across both days of work.
 The app is live on Streamlit Community Cloud. The repo is at [timedreamer/humanizer_web](https://github.com/timedreamer/humanizer_web). If you use the Humanizer skill and want a quick paste-and-go option without opening a terminal, it does the job.
 
 For $0.33 and a Saturday afternoon, I'm pretty happy with how CC + DeepSeek V4 held up.
+
+## Opening it up
+
+The original setup used a hard password wall — you had to ask me for the password to try the app. That felt like unnecessary friction for something meant to be a quick tool.
+
+I changed it to a soft gate: the password is displayed right on the login screen. It keeps bots and crawlers away, but any human who lands on the page can get in without asking. I also added a session-based rate limit — 30 requests per hour — so a single browser tab can't accidentally run up the API bill.
+
+It's still just a weekend side project, but lowering the barrier to try it makes it feel more like a real product.
 
 The screenshot of the Streamlit app.
 
